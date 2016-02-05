@@ -46,3 +46,19 @@ header {
   color: #000;
   padding: 0.2em 0;
 }
+
+main {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+
+  .main-grid-image {
+    flex-basis: 3;
+
+    img {
+      display: block;
+    }
+  }
+}
