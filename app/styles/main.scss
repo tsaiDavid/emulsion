@@ -1,6 +1,15 @@
 // bower:scss
 // endbower
 $nav-bg-color: #CCC;
+$select-width: 220px;
+$select-height: 40px;
+$select-color: #fff;
+
+$pale-yellow-01: #A8A7A8;
+$pale-green-02: #A2D4AB;
+$med-teal-03: #3EACA8;
+$med-slate-04: #547A82;
+$med-brown-05: #5A5050;
 
 body {
   background: #fafafa;
@@ -8,35 +17,41 @@ body {
   color: #333;
 }
 
+h1 {
+  font-size: 4rem;
+  font-family: 'Open Sans';
+  font-weight: 900;
+  text-align: center;
+  margin-top: 4rem;
+  text-transform: uppercase;
+  letter-spacing: 1.5rem;
+
+   background: -webkit-linear-gradient(top, $pale-yellow-01, $pale-green-02, $med-teal-03, $med-slate-04, $med-brown-05);
+   -webkit-background-clip: text;
+   -webkit-text-fill-color: transparent;
+}
+
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Open Sans'), local('OpenSans'), url(http://themes.googleusercontent.com/static/fonts/opensans/v7/cJZKeOuBrn4kERxqtaUH3bO3LdcAZYWl9Si6vvxL-qU.woff) format('woff');
+}
+
 header {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: $nav-bg-color;
+  background: -webkit-linear-gradient(top, #ccc, #fafafa);
   width: 100%;
-  height: 100px;
+  height: 150px;
 
   #nav-title {
     text-transform: uppercase;
-    font-weight: lighter;
-    letter-spacing: 0.5rem;
-    font-size: 2rem;
-  }
-}
-
-.hero-unit {
-  margin: 50px auto 0 auto;
-  width: 300px;
-  font-size: 18px;
-  font-weight: 200;
-  line-height: 30px;
-  background-color: #eee;
-  border-radius: 6px;
-  padding: 60px;
-  h1 {
-    font-size: 60px;
-    line-height: 1;
-    letter-spacing: -1px;
+    font-weight: 200;
+    letter-spacing: 1rem;
+    font-size: 3rem;
+    color: $med-slate-04;
   }
 }
 
@@ -45,6 +60,25 @@ header {
   background: #ccc;
   color: #000;
   padding: 0.2em 0;
+}
+
+.selector-row {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .film-selector {
+    width: $select-width;
+    height: $select-height;
+    margin-top: 1em;
+    margin-bottom: 1em;
+    cursor: pointer;
+    display: block;
+    border-color: transparent;
+    background-color: #ccc;
+    font-size: 1rem;
+  }
 }
 
 main {
@@ -56,9 +90,12 @@ main {
 
   .main-grid-image {
     flex-basis: 3;
+  }
 
-    img {
-      display: block;
-    }
+  .grid-image {
+    width: 500px;
+    height: 300px;
+    background-size: cover;
+    background-repeat: no-repeat;
   }
 }
