@@ -1,4 +1,4 @@
-((window) => {
+(() => {
   'use strict';
 
   window.qs = (selector, scope) => {

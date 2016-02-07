@@ -9,7 +9,7 @@ $pale-yellow-01: #A8A7A8;
 $pale-green-02: #A2D4AB;
 $med-teal-03: #3EACA8;
 $med-slate-04: #547A82;
-$med-brown-05: #5A5050;
+
 
 body {
   background: #fafafa;
@@ -26,7 +26,7 @@ h1 {
   text-transform: uppercase;
   letter-spacing: 1.5rem;
 
-   background: -webkit-linear-gradient(top, $pale-yellow-01, $pale-green-02, $med-teal-03, $med-slate-04, $med-brown-05);
+   background: -webkit-linear-gradient(top, $pale-yellow-01, $pale-green-02);
    -webkit-background-clip: text;
    -webkit-text-fill-color: transparent;
 }

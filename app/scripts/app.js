@@ -1,82 +1,76 @@
-(() => {
-  'use strict';
+const Emulsion = (() => {
 
   /**
-   * For the time being, here's how we will "import" our utility/helper functions.
+   * This is the state of our Emulsion application - ideally, app state has a
+   * single source of truth!
+   * @type {Object}
    */
-  const $reduceImgResponse = window.$reduceImgResponse;
-  const $on = window.$on;
-  const qs = window.qs;
-  const $each = window.$each;
-
-  // Variable ref. to our query-selected "main" element, which houses our image grid.
-  const mainContainer = qs('main');
+  const state = {
+    modalOpen: false,
+    images: null,
+    availFilmTypes: ['ektar', 'portra', 'tri-x', 'superia', 'velvia'],
+    selectedFilmType: null, // default
+  };
 
   /**
-   * This function allows us to iterate through our data object - which contains
-   * all the necessary information regarding our image. The '$each' function that
-   * I implemented allows us to iterate over the object with ease.
+   * The exposed Grid module is made available to our application.
    */
-  function renderImages() {
-    $each(window.data, (image) => {
-      const container = document.createElement('div');
-      container.className = 'grid-image-container';
+  const grid = Grid();
 
-      const gridImage = document.createElement('div');
-      gridImage.className = 'grid-image';
-      gridImage.style.backgroundImage = `url(${image.src})`;
+  if (state.images === null && state.selectedFilmType === null) {
+    state.images = {};
+    // TODO: Consider moving the randomization out as a helper fn
+    state.selectedFilmType = state.availFilmTypes[Math.floor(
+      Math.random() * state.availFilmTypes.length
+    )];
 
-      container.appendChild(gridImage);
-      mainContainer.appendChild(container);
+    grid.fetchImages(state.selectedFilmType, (data) => {
+      if (!state.images[data]) {
+        state.images = grid.reduceImages(data.photos.photo);
+      }
     });
   }
 
   /**
-   * Here, we get images from Flickr! Thanks to ES6's friendly string interpolation,
-   * we're able to easily swap out variables - in this case, replacing the search tag
-   * for film type by drawing that information from our selector. The response is
-   * converted to JSON then converted to a more digestible format with a helper function.
+   * Based on current random film, you advance to the next one in the array,
+   * and it will execute a callback with that in mind.
+   * @param  {Function} callback [Callback is excuted on whichever film you want!]
+   * @return {[type]}            [description]
    */
-  function loadImage(filmType) {
-    fetch(`https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=437db95c9e8c0340302759555b1f684f&tags=${filmType}%2C+film&sort=relevance&per_page=10&page=1&format=json&nojsoncallback=1`)
-    .then((response) => {
-      return response.json();
-    }).then((data) => {
-      window.data = $reduceImgResponse(data.photos.photo);
-    }).then(() => {
-      renderImages();
-    });
+  const advanceFilm = (callback) => {
+
   }
 
   /**
-   * Function will remove all of grid element's children.
-   * Called whenever we make a change on the type of film we're viewing.
+   * Given a key and a new value, update the app state and invoke a callback -
+   * only if one is provided.
+   * @param  {[type]}   key      [state key]
+   * @param  {[type]}   value    [value associated with state key]
+   * @param  {Function} callback [callback to be optionally invoked]
+   * @return {[type]}            [description]
    */
-  function clearImages() {
-    while (mainContainer.firstChild) {
-      mainContainer.removeChild(mainContainer.firstChild);
+  const setState = (key, value, callback) => {
+    state[key] = value;
+
+    if (callback !== undefined) {
+      callback(value);
     }
-    mainContainer.textContent = '';
   }
 
   /**
-   * When the window is loaded, we'll default the loaded images
-   * to the "Kodak Ektar" set.
+   * Return the state of the application
+   * @return {[type]} [Application state object]
    */
-  $on(window, 'load', () => {
-    loadImage('ektar');
-  });
+  const getState = () => {
+    return state;
+  };
 
   /**
-   * Here, we add an event - when a user selects a new film type,
-   * we'll go ahead and clear the main element's children and load
-   * the new ones, requesting the "value" of the film type from Flickr.
-   *
-   * @param  {[type]} qs('.film-selector' [description]
-   * @return {[type]}                     [description]
+   * Anything returned in the block below will make those properties/methods
+   * public!
    */
-  $on(qs('.film-selector'), 'change', () => {
-    clearImages();
-    loadImage(qs('.film-selector').value);
-  });
+  return {
+    getState,
+    setState
+  };
 })();
