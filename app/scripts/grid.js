@@ -53,6 +53,10 @@ const Grid = (() => {
       gridImage.style.backgroundImage = `url(${image.src})`;
 
       container.appendChild(gridImage);
+      container.setAttribute('data-image-id', image.id);
+      $on(container, 'click', () => {
+        window.location=`#openModal`;
+      });
       qs('main').appendChild(container);
     });
   };
