@@ -5,6 +5,5 @@
 const init = (() => {
   const app = window.Emulsion;
 
-  $on(qs('#next-film-arrow'), 'click', app.advanceFilm);
-
+  window.$on(window.qs('#next-film-arrow'), 'click', app.advanceFilm);
 })();

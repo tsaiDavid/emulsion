@@ -163,9 +163,13 @@ gulp.task('wiredep', () => {
     .pipe(gulp.dest('app'));
 });
 
-gulp.task('build', ['lint', 'html', 'images', 'fonts', 'extras'], () => {
+gulp.task('build', ['html', 'images', 'fonts', 'extras'], () => {
   return gulp.src('dist/**/*').pipe($.size({ title: 'build', gzip: true }));
 });
+
+// gulp.task('build', ['lint', 'html', 'images', 'fonts', 'extras'], () => {
+//   return gulp.src('dist/**/*').pipe($.size({ title: 'build', gzip: true }));
+// });
 
 gulp.task('default', ['clean'], () => {
   gulp.start('build');

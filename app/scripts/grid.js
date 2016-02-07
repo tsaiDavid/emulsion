@@ -1,4 +1,4 @@
-const Grid = (() => {
+const Grid = () => {
   /**
    * Used to fetch images from the Flickr endpoint - leverages ES6's ability to
    * work with the 'fetch API' - and handle async with promises.
@@ -43,8 +43,8 @@ const Grid = (() => {
   const renderImages = (imagesObject) => {
     // Notice that we will call removeImages before rendering the grid, to ensure
     // that we are going to clear the landscape before operating again!
-    removeImages(qs('main'));
-    $each(imagesObject, (image) => {
+    removeImages(window.qs('main'));
+    window.$each(imagesObject, (image) => {
       const container = document.createElement('div');
       container.className = 'grid-image-container';
 
@@ -54,10 +54,10 @@ const Grid = (() => {
 
       container.appendChild(gridImage);
       container.setAttribute('data-image-id', image.id);
-      $on(container, 'click', () => {
-        window.location=`#openModal`;
+      window.$on(container, 'click', () => {
+        window.location = `#openModal`;
       });
-      qs('main').appendChild(container);
+      window.qs('main').appendChild(container);
     });
   };
 
@@ -67,4 +67,4 @@ const Grid = (() => {
     reduceImages,
     renderImages
   };
-});
+};

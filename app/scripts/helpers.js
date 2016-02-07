@@ -1,12 +1,11 @@
 (() => {
   'use strict';
-
   window.qs = (selector, scope) => {
     return (scope || document).querySelector(selector);
   };
 
   window.$on = (target, type, callback, useCapture) => {
-      target.addEventListener(type, callback, !!useCapture);
+    target.addEventListener(type, callback, !!useCapture);
   };
 
   window.$parent = (element, tagName) => {
@@ -35,8 +34,10 @@
         cb(collection[i], i, collection);
       }
     } else {
-      for (let prop in collection) {
-        cb(collection[prop], prop, collection);
+      for (const prop in collection) {
+        if ({}.hasOwnProperty.call(collection, prop)) {
+          cb(collection[prop], prop, collection);
+        }
       }
     }
   };
