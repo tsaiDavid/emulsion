@@ -104,7 +104,6 @@ const Emulsion = (() => {
    */
   return {
     getState,
-    setState,
     advanceFilm
   };
 })();
