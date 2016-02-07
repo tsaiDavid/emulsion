@@ -16,6 +16,7 @@
 
     <!-- build:css styles/main.css -->
     <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
     <!-- endbuild -->
 
   </head>
@@ -27,17 +28,13 @@
       <div id="nav-title">
         <h1>Emulsion</h1>
       </div>
-      <select class="film-selector" name="">
-        <option value="ektar">Kodak Ektar</option>
-        <option value="portra">Kodak Portra</option>
-        <option value="tri-x">Kodak Tri-X</option>
-        <option value="velvia">Fujifilm Velvia</option>
-        <option value="superia">Fujifilm Superia</option>
-      </select>
+      <div class="nav-film-select">
+        <span id="current-film"></span>
+        <span id="next-film-arrow">
+          <i class="fa fa-angle-double-right"></i>
+        </span>
+      </div>
     </header>
-    <div class="selector-row">
-
-    </div>
 
     <main class="container">
       <!-- Grid images appended here. -->
@@ -49,11 +46,10 @@
     <!-- endbuild -->
 
     <!-- build:js scripts/main.js -->
-
-    <script src="scripts/Helpers.js"></script>
-    <script src="scripts/controller.js"></script>
-    <script src="scripts/Grid.js"></script>
-    <script src="scripts/App.js"></script>
+    <script src="scripts/helpers.js"></script>
+    <script src="scripts/grid.js"></script>
+    <script src="scripts/app.js"></script>
+    <script src="scripts/init.js"></script>
     <!-- endbuild -->
   </body>
 </html>

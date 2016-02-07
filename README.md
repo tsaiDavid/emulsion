@@ -20,11 +20,9 @@ gulp
 
 ## Code Style and Methodology
 
-  - SCSS / CSS using BEM (Block, Element, and Modifiers)
-  - ES6 using AirBnB's standard configuration with ESLint
-    - The `.eslintrc` is the config file for the linting.
+Application uses no frameworks, instead relying on a "global" app state.
 
-Flickr
+## Flickr
 
 https://www.flickr.com/services/api/misc.urls.html
 

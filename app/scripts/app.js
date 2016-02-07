@@ -1,5 +1,4 @@
 const Emulsion = (() => {
-
   /**
    * This is the state of our Emulsion application - ideally, app state has a
    * single source of truth!
@@ -9,7 +8,8 @@ const Emulsion = (() => {
     modalOpen: false,
     images: null,
     availFilmTypes: ['ektar', 'portra', 'tri-x', 'superia', 'velvia'],
-    selectedFilmType: null, // default
+    filmType: null,
+    filmIndex: null
   };
 
   /**
@@ -17,18 +17,25 @@ const Emulsion = (() => {
    */
   const grid = Grid();
 
-  if (state.images === null && state.selectedFilmType === null) {
+  const loadImages = () => {
+    grid.fetchImages(state.filmType, (data) => {
+        setState('images', grid.reduceImages(data.photos.photo), () => {
+          grid.renderImages(state.images);
+        });
+    });
+  };
+
+  // Block is evaluated upon first time loading the app
+  if (state.images === null && state.filmType === null) {
     state.images = {};
     // TODO: Consider moving the randomization out as a helper fn
-    state.selectedFilmType = state.availFilmTypes[Math.floor(
-      Math.random() * state.availFilmTypes.length
-    )];
+    // let randomIndex = Math.floor(Math.random() * state.availFilmTypes.length);
+    let randomIndex = 0;
 
-    grid.fetchImages(state.selectedFilmType, (data) => {
-      if (!state.images[data]) {
-        state.images = grid.reduceImages(data.photos.photo);
-      }
-    });
+    state.filmType = state.availFilmTypes[randomIndex];
+    state.filmIndex = randomIndex;
+
+    loadImages();
   }
 
   /**
@@ -37,9 +44,24 @@ const Emulsion = (() => {
    * @param  {Function} callback [Callback is excuted on whichever film you want!]
    * @return {[type]}            [description]
    */
-  const advanceFilm = (callback) => {
+  const advanceFilm = function(callback) {
+    let nextVal = null;
+    let nextIndex = 0;
 
-  }
+    if (state.availFilmTypes[state.filmIndex + 1] !== undefined) {
+      nextVal = state.availFilmTypes[state.filmIndex + 1];
+      nextIndex = state.filmIndex + 1;
+    } else {
+      nextVal = state.availFilmTypes[nextIndex];
+    }
+
+    setState('filmType', nextVal);
+    setState('filmIndex', nextIndex, () => {
+      loadImages();
+      grid.renderImages(state.images);
+      render();
+    });
+  };
 
   /**
    * Given a key and a new value, update the app state and invoke a callback -
@@ -55,7 +77,7 @@ const Emulsion = (() => {
     if (callback !== undefined) {
       callback(value);
     }
-  }
+  };
 
   /**
    * Return the state of the application
@@ -66,11 +88,23 @@ const Emulsion = (() => {
   };
 
   /**
+   * Render function can only be triggered by application.
+   * @return {[type]} [description]
+   */
+  const render = () => {
+    let film = qs('#current-film');
+    film.innerHTML = state.filmType;
+  }
+
+  render();
+
+  /**
    * Anything returned in the block below will make those properties/methods
    * public!
    */
   return {
     getState,
-    setState
+    setState,
+    advanceFilm
   };
 })();

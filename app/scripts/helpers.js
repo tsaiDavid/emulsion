@@ -19,15 +19,6 @@
     return window.$parent(element.parentNode, tagName);
   };
 
-  // Reduces our data down to an object, with their image id's mapped to the image object.
-  window.$reduceImgResponse = (data) => {
-    return data.reduce((dataObject, image) => {
-      dataObject[image.id] = image;
-      dataObject[image.id].src = window.$createImgSource(image);
-      return dataObject;
-    }, {});
-  };
-
   // Takes in an 'image' object and produces the correct source.
   window.$createImgSource = (image) => {
     return (

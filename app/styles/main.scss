@@ -31,6 +31,13 @@ h1 {
    -webkit-text-fill-color: transparent;
 }
 
+#current-film {
+  text-transform: uppercase;
+  font-weight: 400;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
 @font-face {
   font-family: 'Open Sans';
   font-style: normal;
@@ -98,4 +105,11 @@ main {
     background-size: cover;
     background-repeat: no-repeat;
   }
+}
+
+#next-film-arrow {
+  font-size: 1.5em;
+  padding-left: 10px;
+  padding-right: 10px;
+  cursor: pointer;
 }
