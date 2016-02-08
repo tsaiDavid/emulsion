@@ -1,5 +1,6 @@
 (() => {
   'use strict';
+
   window.qs = (selector, scope) => {
     return (scope || document).querySelector(selector);
   };
@@ -29,7 +30,7 @@
     if (element.classList) {
       element.classList.add(className);
     } else {
-      element.className += ' ' + className;
+      element.className += ' ${className}';
     }
   };
 
@@ -46,32 +47,5 @@
   window.$renderOverlay = (imageSource) => {
     const img = window.qs('.lightbox-image');
     img.setAttribute('src', imageSource);
-  };
-
-/**
- * Lodash-like utility functions, written from scratch.
- */
-  window.$each = (collection, cb) => {
-    if (Array.isArray(collection)) {
-      for (let i = 0; i < collection.length; i++) {
-        cb(collection[i], i, collection);
-      }
-    } else {
-      for (const prop in collection) {
-        if ({}.hasOwnProperty.call(collection, prop)) {
-          cb(collection[prop], prop, collection);
-        }
-      }
-    }
-  };
-
-  window.$map = (collection, cb) => {
-    const result = [];
-
-    window.$each(collection, (el) => {
-      result.push(cb(el));
-    });
-
-    return result;
   };
 })(window);

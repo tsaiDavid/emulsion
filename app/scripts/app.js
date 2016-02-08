@@ -1,42 +1,34 @@
 const Emulsion = (() => {
-  /**
-   * This is the state of our Emulsion application - ideally, app state has a
-   * single source of truth!
-   * @type {Object}
-   */
   const state = {
     modalOpen: false,
     images: null,
-    availFilmTypes: ['ektar', 'portra', 'tri-x', 'superia', 'velvia'],
-    currFilmType: null,
-    currFilmIndex: null,
-    lightbox: null
+    lightbox: null,
+    currFilmType: 'ektar',
+    currFilmIndex: '0',
+    availFilmTypes: ['ektar', 'portra', 'tri-x', 'superia', 'velvia']
   };
 
-  /**
-   * The exposed Grid module is made available to our application.
-   */
+  /** Exposing 'Grid' in our application **/
   const grid = window.Grid();
 
   /**
    * Given a key and a new value, update the app state and invoke a callback -
    * only if one is provided.
-   * @param  {[type]}   key      [state key]
-   * @param  {[type]}   value    [value associated with state key]
-   * @param  {Function} callback [callback to be optionally invoked]
-   * @return {[type]}            [description]
+   * @param  {String}   key      - state key
+   * @param  {Anything} value    - value associated with state key
+   * @param  {Function} callback - callback to be optionally invoked
    */
   const setState = (key, value, callback) => {
     state[key] = value;
-
     if (callback !== undefined) {
       callback(value);
     }
   };
 
   /**
-   * Return the state of the application
-   * @return {[type]} [Application state object]
+   * Returns the state object, and optionally - if provided a key, its value.
+   * @param  {String} key    - optional key, passed to retrieve specific value.
+   * @return {Object} state  - app state object, or specific value.
    */
   const getState = (key) => {
     if (key === undefined) {
@@ -45,26 +37,16 @@ const Emulsion = (() => {
     return state[key];
   };
 
+  /**
+   * Loads and renders the image grid - after fetching data from Flickr.
+   */
   const loadImages = () => {
     grid.fetchImages(state.currFilmType, (data) => {
-      setState('images', grid.reduceImages(data.photos.photo), () => {
+      setState('images', grid.mapImages(data.photos.photo), () => {
         grid.renderImages(state.images);
       });
     });
   };
-
-  // Block is evaluated upon first time loading the app
-  if (state.images === null && state.currFilmType === null) {
-    state.images = new Map();
-    // TODO: Consider moving the randomization out as a helper fn
-    // let randomIndex = Math.floor(Math.random() * state.availFilmTypes.length);
-    const randomIndex = 0;
-
-    state.currFilmType = state.availFilmTypes[randomIndex];
-    state.currFilmIndex = randomIndex;
-
-    loadImages();
-  }
 
   /**
    * Render function can only be triggered by application.
@@ -75,12 +57,10 @@ const Emulsion = (() => {
   };
 
   /**
-   * Based on current random film, you advance to the next one in the array,
+   * Based on current film type, you advance to the next one in the array,
    * and it will execute a callback with that in mind.
-   * @param  {Function} callback [Callback is excuted on whichever film you want!]
-   * @return {[type]}            [description]
    */
-  const advanceFilm = () => {
+  const nextFilmType = () => {
     let nextVal = null;
     let nextIndex = 0;
 
@@ -99,6 +79,13 @@ const Emulsion = (() => {
     });
   };
 
+  /**
+   * Carries out state changes on the 'lightbox' property in our app state.
+   * This dictates which image is loaded up in our overlay/lightbox - evaluated
+   * by action types. This method is called by our app's custom event listener.
+   * @param  {String} imageId   - string representing image's id
+   * @param  {String} action    - string representing action type
+   */
   const setLightbox = (imageId, action) => {
     const index = getState('images').reduce((result, image, i) => {
       if (image.id === imageId) { return i; }
@@ -121,33 +108,29 @@ const Emulsion = (() => {
       default:
         break;
     }
-
   };
 
   render();
+  loadImages();
 
   /**
    * Initialization block.
    */
   const app = window.qs('.app-container');
   window.$on(app, 'stateChange', (e) => {
-
     switch (e.detail.action) {
       case 'nextImage':
         setLightbox(null, 'nextImage');
         window.$renderOverlay(getState('images')[getState('lightbox')].src);
         break;
-
       case 'prevImage':
         setLightbox(null, 'prevImage');
         window.$renderOverlay(getState('images')[getState('lightbox')].src);
         break;
-
       case 'closeModal':
         setState('modalOpen', false);
         setState('lightbox', null);
         break;
-
       case 'openModal':
         const imageId = (e.srcElement.parentElement.attributes['data-image-id'].value);
         setState('modalOpen', true);
@@ -156,11 +139,9 @@ const Emulsion = (() => {
           return (el.id === imageId);
         }).src);
         break;
-
       default:
         break;
     }
-
     /**
      * During development, uncomment the two lines below to see your app state change,
      * based on the actions that are occuring.
@@ -169,13 +150,9 @@ const Emulsion = (() => {
     console.log(getState());
   });
 
-
-  /**
-   * Anything returned in the block below will make those properties/methods
-   * public!
-   */
+  /** expose methods - revealing module pattern **/
   return {
     getState,
-    advanceFilm
+    nextFilmType
   };
 })();

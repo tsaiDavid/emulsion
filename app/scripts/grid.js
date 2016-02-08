@@ -15,19 +15,21 @@ const Grid = () => {
   };
 
   /**
-   * Reduces Flickr's response data to a Map (ES6) - image ID's are mapped to their
-   * associated image object - adding a 'src' property with its source URL. The Map
-   * allows us to iterate over it, while maintaining constant time lookup on values.
-   * @param  {[type]} data [description]
-   * @return {[type]}      [description]
+   * Provided an array of image objects, returns an array with each image + its source value.
+   * @param  {Array} data   - Array of images
+   * @return {Array}        - Array of images, includes img src
    */
-  const reduceImages = (data) => {
+  const mapImages = (data) => {
     return data.map((image) => {
       image.src = window.$createImgSource(image);
       return image;
     });
   };
 
+  /**
+   * Removes all of a given container's children!
+   * @param  {Element} container  - Our target element to remove images from.
+   */
   const removeImages = (container) => {
     while (container.firstChild) {
       container.removeChild(container.firstChild);
@@ -36,36 +38,41 @@ const Grid = () => {
   };
 
   /**
-   * Renders images inside the grid - will remove unecessary images from DOM first.
-   * @param  {[type]} imagesObject [takes in an images map to operate over]
-   * @return {[type]}              [description]
+   * Renders all images on the grid - removes old images before adding new ones!
+   * @param  {Array} imagesArray - Array of images that exist in the app state.
    */
   const renderImages = (imagesArray) => {
-    // Notice that we will call removeImages before rendering the grid, to ensure
-    // that we are going to clear the landscape before operating again!
     removeImages(window.qs('main'));
 
     imagesArray.forEach((image) => {
+      /** create a div, 'grid-image-container' **/
       const container = document.createElement('div');
       container.className = 'grid-image-container';
+
+      /** create a div, 'grid-image' - this ends up being the image **/
       const gridImage = document.createElement('div');
       gridImage.className = 'grid-image';
       gridImage.style.backgroundImage = `url(${image.src})`;
+
       container.appendChild(gridImage);
       container.setAttribute('data-image-id', image.id);
 
+      /** event listener is added for each newly rendered image - triggers modal open **/
       window.$on(container, 'click', (e) => {
         e.srcElement.dispatchEvent(window.$stateEvent('openModal'));
         window.$addClass(window.qs('.overlay'), 'is-open');
       });
+
+      /** append our newly built container, with image, to the main app element **/
       window.qs('main').appendChild(container);
     });
   };
 
+  /** expose methods - revealing module pattern **/
   return {
     fetchImages,
+    mapImages,
     removeImages,
-    reduceImages,
     renderImages
   };
 };
