@@ -1,60 +1,36 @@
-// bower:scss
-// endbower
-$nav-bg-color: #CCC;
-$select-width: 220px;
-$select-height: 40px;
-$select-color: #fff;
-
-$pale-yellow-01: #A8A7A8;
-$pale-green-02: #A2D4AB;
-$med-teal-03: #3EACA8;
-$med-slate-04: #547A82;
-
-
 body {
   background: #fafafa;
   font-family: 'Open Sans', Helvetica, Arial, sans-serif;
   color: #333;
-}
-
-h1 {
-  font-size: 4rem;
-  font-family: 'Open Sans';
-  font-weight: 900;
-  text-align: center;
-  margin-top: 4rem;
-  text-transform: uppercase;
-  letter-spacing: 1.5rem;
-
-   background: -webkit-linear-gradient(top, $pale-yellow-01, $pale-green-02);
-   -webkit-background-clip: text;
-   -webkit-text-fill-color: transparent;
-}
-
-main {
+  width: 100%;
   display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
   align-items: center;
   justify-content: center;
+}
 
-  .main-grid-image {
+.container {
+  display: flex;
+  flex-wrap: wrap;
+
+  .grid-image-container {
+    margin: 5px;
+    border: 1px solid $light-grey;
     flex-basis: 3;
+    width: 300px;
+    height: 300px;
+    transition: all 100ms ease-in;
+
+    &:hover {
+      cursor: pointer;
+      transform: scale(1.005);
+      border-color: $mid-grey;
+    }
   }
 
   .grid-image {
-    width: 500px;
+    width: 300px;
     height: 300px;
-    background-size: cover;
-    background-repeat: no-repeat;
   }
-}
-
-.browserupgrade {
-  margin: 0.2em 0;
-  background: #ccc;
-  color: #000;
-  padding: 0.2em 0;
 }
 
 .selector-row {

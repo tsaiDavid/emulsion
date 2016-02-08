@@ -17,7 +17,7 @@ $text-color-light: #F3F3F3 !default;
 
 /// Main brand color
 /// @type Color
-$brand-color: #E50050 !default;
+$brand-color: rgba(#6c3409, 0.80) !default;
 
 /// Light grey
 /// @type Color
@@ -53,3 +53,15 @@ $breakpoints: (
 /// @example scss - When using a CDN
 ///   $base-url: 'http://cdn.example.com/assets/';
 $base-url: '/assets/' !default;
+
+$nav-bg-color: #CCC;
+$select-width: 220px;
+$select-height: 40px;
+$select-color: #fff;
+
+$pale-yellow-01: #A8A7A8;
+$pale-green-02: #A2D4AB;
+$med-teal-03: #3EACA8;
+$med-slate-04: #547A82;
+
+$current-film-text: rgba(#615c5c, 0.80);

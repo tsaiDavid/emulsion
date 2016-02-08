@@ -2,12 +2,19 @@
 // This file contains all styles related to the footer of the site/application.
 // -----------------------------------------------------------------------------
 
+footer {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+}
+
 .footer-container {
   align-items: center;
   background-color: $mid-grey;
   display: flex;
   height: 100px;
   justify-content: center;
-  z-index: 1000;
   margin-top: 30px;
+  z-index: 1000;
 }

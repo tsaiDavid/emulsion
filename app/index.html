@@ -13,6 +13,7 @@
     <!-- bower:css -->
     <!-- endbower -->
     <!-- endbuild -->
+    <link href="http://db.onlinewebfonts.com/c/c2cbe255c39d94f51cf51c2a14a5c048?family=ActaW01-Light" rel="stylesheet" type="text/css"/>
     <link href="http://db.onlinewebfonts.com/c/2da53e7106d78ce56a7fa4b29ccaeee6?family=ActaDisplayW01-Book" rel="stylesheet" type="text/css"/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
     <!-- build:css styles/main.css -->
@@ -26,10 +27,9 @@
         <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
       <![endif]-->
       <header class="nav">
-        <div id="nav-title">
-          <h1>Emulsion</h1>
-        </div>
+        <div id="nav-title">Emulsion</div>
         <div class="nav-film-select">
+          <span id="current-film-intro">viewing the emulsion of</span>
           <span id="current-film"></span>
           <span id="next-film-arrow">
             <i class="fa fa-angle-double-right"></i>
@@ -73,7 +73,6 @@
 
     <!-- build:js scripts/main.js -->
     <script src="scripts/helpers.js"></script>
-    <script src="scripts/overlay.js"></script>
     <script src="scripts/grid.js"></script>
     <script src="scripts/app.js"></script>
     <script src="scripts/init.js"></script>

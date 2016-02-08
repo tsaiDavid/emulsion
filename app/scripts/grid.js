@@ -1,3 +1,5 @@
+'use strict';
+
 const Grid = () => {
   /**
    * Used to fetch images from the Flickr endpoint - leverages ES6's ability to

@@ -22,13 +22,19 @@
 }
 
 .overlay-left, .overlay-right {
-  color: $mid-grey;
+  color: $light-grey;
   padding: 5%;
   font-size: 30px;
   cursor: pointer;
   transition: all 100ms ease-in-out;
   &:hover {
     transform: scale(1.2);
+  }
+
+  &.is-disabled {
+    color: $mid-grey;
+    transition: none;
+    pointer-events: none;
   }
 }
 
@@ -42,7 +48,7 @@
   position: relative;
   //overflow: hidden
   .modal-close-btn {
-    color: $mid-grey;
+    color: $light-grey;
     position: absolute;
     top: -40px;
     right: -40px;
@@ -60,6 +66,7 @@
   }
   .lightbox {
     max-width: 50%;
+
     .lightbox-image-title {
       color: black;
       font-size: 30px;
