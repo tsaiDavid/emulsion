@@ -13,7 +13,7 @@
     <!-- bower:css -->
     <!-- endbower -->
     <!-- endbuild -->
-
+    <link href="http://db.onlinewebfonts.com/c/2da53e7106d78ce56a7fa4b29ccaeee6?family=ActaDisplayW01-Book" rel="stylesheet" type="text/css"/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
     <!-- build:css styles/main.css -->
     <link rel="stylesheet" href="styles/main.css">
@@ -21,30 +21,51 @@
 
   </head>
   <body>
-    <!--[if lt IE 10]>
-      <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-    <![endif]-->
-    <header class="nav">
-      <div id="nav-title">
-        <h1>Emulsion</h1>
-      </div>
-      <div class="nav-film-select">
-        <span id="current-film"></span>
-        <span id="next-film-arrow">
-          <i class="fa fa-angle-double-right"></i>
-        </span>
-      </div>
-    </header>
+    <div class="app-container">
+      <!--[if lt IE 10]>
+        <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+      <![endif]-->
+      <header class="nav">
+        <div id="nav-title">
+          <h1>Emulsion</h1>
+        </div>
+        <div class="nav-film-select">
+          <span id="current-film"></span>
+          <span id="next-film-arrow">
+            <i class="fa fa-angle-double-right"></i>
+          </span>
+        </div>
+      </header>
 
-    <main class="container">
-      <!-- Grid images appended here. -->
-    </main>
-    <div id="openModal" class="modalDialog">
-    <div>
-  		<a href="#close" title="Close" class="close"><i class="fa fa-times"></i></a>
-  		<h2>Image Light Box</h2>
+      <main class="container">
+        <!-- Grid images appended here. -->
+      </main>
+
+      <!-- Overlay is a modal which also contains a lightbox component -->
+      <div class="overlay">
+        <div class="overlay-left">
+          <i class="fa fa-chevron-left"></i>
+        </div>
+        <div class="modal">
+          <div class="modal-close-btn">
+            <i class="fa fa-times"></i>
+          </div>
+          <div class="lightbox">
+            <div class="lightbox-image-title"></div>
+            <img class="lightbox-image" src="" alt="" />
+          </div>
+        </div>
+        <div class="overlay-right">
+          <i class="fa fa-chevron-right"></i>
+        </div>
+      </div>
+
+      <footer class="footer-container">
+        <div class="footer-text">
+          Developed with <i class="fa fa-camera"></i> in San Francisco
+        </div>
+      </footer>
     </div>
-
     <!-- build:js scripts/vendor.js -->
     <!-- bower:js -->
     <!-- endbower -->
@@ -52,6 +73,7 @@
 
     <!-- build:js scripts/main.js -->
     <script src="scripts/helpers.js"></script>
+    <script src="scripts/overlay.js"></script>
     <script src="scripts/grid.js"></script>
     <script src="scripts/app.js"></script>
     <script src="scripts/init.js"></script>

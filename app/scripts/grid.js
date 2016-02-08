@@ -15,17 +15,17 @@ const Grid = () => {
   };
 
   /**
-   * Reduces Flickr's response data to an object - image ID's are mapped to their
-   * associated image object - adding a 'src' property with its source URL.
+   * Reduces Flickr's response data to a Map (ES6) - image ID's are mapped to their
+   * associated image object - adding a 'src' property with its source URL. The Map
+   * allows us to iterate over it, while maintaining constant time lookup on values.
    * @param  {[type]} data [description]
    * @return {[type]}      [description]
    */
   const reduceImages = (data) => {
-    return data.reduce((dataObject, image) => {
-      dataObject[image.id] = image;
-      dataObject[image.id].src = window.$createImgSource(image);
-      return dataObject;
-    }, {});
+    return data.map((image) => {
+      image.src = window.$createImgSource(image);
+      return image;
+    });
   };
 
   const removeImages = (container) => {
@@ -37,25 +37,26 @@ const Grid = () => {
 
   /**
    * Renders images inside the grid - will remove unecessary images from DOM first.
-   * @param  {[type]} imagesObject [takes in an images object to operate over]
+   * @param  {[type]} imagesObject [takes in an images map to operate over]
    * @return {[type]}              [description]
    */
-  const renderImages = (imagesObject) => {
+  const renderImages = (imagesArray) => {
     // Notice that we will call removeImages before rendering the grid, to ensure
     // that we are going to clear the landscape before operating again!
     removeImages(window.qs('main'));
-    window.$each(imagesObject, (image) => {
+
+    imagesArray.forEach((image) => {
       const container = document.createElement('div');
       container.className = 'grid-image-container';
-
       const gridImage = document.createElement('div');
       gridImage.className = 'grid-image';
       gridImage.style.backgroundImage = `url(${image.src})`;
-
       container.appendChild(gridImage);
       container.setAttribute('data-image-id', image.id);
-      window.$on(container, 'click', () => {
-        window.location = `#openModal`;
+
+      window.$on(container, 'click', (e) => {
+        e.srcElement.dispatchEvent(window.$stateEvent('openModal'));
+        window.$addClass(window.qs('.overlay'), 'is-open');
       });
       window.qs('main').appendChild(container);
     });

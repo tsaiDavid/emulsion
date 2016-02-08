@@ -1,0 +1,13 @@
+/**
+ * Basic typography style for copy text
+ */
+body {
+  color: $text-color;
+  font: normal 125% / 1.4 $text-font-stack;
+}
+
+footer {
+  color: $text-color-light;
+  font-size: 1rem;
+  letter-spacing: 1px;
+}

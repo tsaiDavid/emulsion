@@ -8,8 +8,9 @@ const Emulsion = (() => {
     modalOpen: false,
     images: null,
     availFilmTypes: ['ektar', 'portra', 'tri-x', 'superia', 'velvia'],
-    filmType: null,
-    filmIndex: null
+    currFilmType: null,
+    currFilmIndex: null,
+    lightbox: null
   };
 
   /**
@@ -37,12 +38,15 @@ const Emulsion = (() => {
    * Return the state of the application
    * @return {[type]} [Application state object]
    */
-  const getState = () => {
-    return state;
+  const getState = (key) => {
+    if (key === undefined) {
+      return state;
+    }
+    return state[key];
   };
 
   const loadImages = () => {
-    grid.fetchImages(state.filmType, (data) => {
+    grid.fetchImages(state.currFilmType, (data) => {
       setState('images', grid.reduceImages(data.photos.photo), () => {
         grid.renderImages(state.images);
       });
@@ -50,14 +54,14 @@ const Emulsion = (() => {
   };
 
   // Block is evaluated upon first time loading the app
-  if (state.images === null && state.filmType === null) {
-    state.images = {};
+  if (state.images === null && state.currFilmType === null) {
+    state.images = new Map();
     // TODO: Consider moving the randomization out as a helper fn
     // let randomIndex = Math.floor(Math.random() * state.availFilmTypes.length);
     const randomIndex = 0;
 
-    state.filmType = state.availFilmTypes[randomIndex];
-    state.filmIndex = randomIndex;
+    state.currFilmType = state.availFilmTypes[randomIndex];
+    state.currFilmIndex = randomIndex;
 
     loadImages();
   }
@@ -67,7 +71,7 @@ const Emulsion = (() => {
    * @return {[type]} [description]
    */
   const render = () => {
-    window.qs('#current-film').innerHTML = state.filmType;
+    window.qs('#current-film').innerHTML = state.currFilmType;
   };
 
   /**
@@ -80,22 +84,91 @@ const Emulsion = (() => {
     let nextVal = null;
     let nextIndex = 0;
 
-    if (state.availFilmTypes[state.filmIndex + 1] !== undefined) {
-      nextVal = state.availFilmTypes[state.filmIndex + 1];
-      nextIndex = state.filmIndex + 1;
+    if (state.availFilmTypes[state.currFilmIndex + 1] !== undefined) {
+      nextVal = state.availFilmTypes[state.currFilmIndex + 1];
+      nextIndex = state.currFilmIndex + 1;
     } else {
       nextVal = state.availFilmTypes[nextIndex];
     }
 
-    setState('filmType', nextVal);
-    setState('filmIndex', nextIndex, () => {
+    setState('currFilmType', nextVal);
+    setState('currFilmIndex', nextIndex, () => {
       loadImages();
       grid.renderImages(state.images);
       render();
     });
   };
 
+  const setLightbox = (imageId, action) => {
+    const index = getState('images').reduce((result, image, i) => {
+      if (image.id === imageId) { return i; }
+      if (result !== null) { return result; }
+    }, null);
+
+    switch (action) {
+      case 'prevImage':
+        setState('lightbox', (getState('lightbox') - 1));
+        break;
+      case 'nextImage':
+        setState('lightbox', (getState('lightbox') + 1));
+        break;
+      case 'openModal':
+        setState('lightbox', index);
+        break;
+      case 'closeModal':
+        setState('lightbox', null);
+        break;
+      default:
+        break;
+    }
+
+  };
+
   render();
+
+  /**
+   * Initialization block.
+   */
+  const app = window.qs('.app-container');
+  window.$on(app, 'stateChange', (e) => {
+
+    switch (e.detail.action) {
+      case 'nextImage':
+        setLightbox(null, 'nextImage');
+        window.$renderOverlay(getState('images')[getState('lightbox')].src);
+        break;
+
+      case 'prevImage':
+        setLightbox(null, 'prevImage');
+        window.$renderOverlay(getState('images')[getState('lightbox')].src);
+        break;
+
+      case 'closeModal':
+        setState('modalOpen', false);
+        setState('lightbox', null);
+        break;
+
+      case 'openModal':
+        const imageId = (e.srcElement.parentElement.attributes['data-image-id'].value);
+        setState('modalOpen', true);
+        setLightbox(imageId, 'openModal');
+        window.$renderOverlay(getState('images').find((el) => {
+          return (el.id === imageId);
+        }).src);
+        break;
+
+      default:
+        break;
+    }
+
+    /**
+     * During development, uncomment the two lines below to see your app state change,
+     * based on the actions that are occuring.
+     */
+    console.log(`Action Type: ${e.detail.action}`);
+    console.log(getState());
+  });
+
 
   /**
    * Anything returned in the block below will make those properties/methods
