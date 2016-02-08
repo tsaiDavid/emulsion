@@ -112,8 +112,10 @@ const Emulsion = (() => {
 
     if (getState('lightbox') + 1 === getState('images').length) {
       window.$addClass(window.qs('.overlay-right'), 'is-disabled');
+      window.$removeClass(window.qs('.overlay-left'), 'is-disabled');
     } else if (getState('lightbox') === 0) {
       window.$addClass(window.qs('.overlay-left'), 'is-disabled');
+      window.$removeClass(window.qs('.overlay-right'), 'is-disabled');
     } else {
       window.$removeClass(window.qs('.overlay-right'), 'is-disabled');
       window.$removeClass(window.qs('.overlay-left'), 'is-disabled');
