@@ -60,4 +60,24 @@
       }, timeout);
     };
   };
+
+  window.$GET = (url, callback) => {
+    const request = new XMLHttpRequest();
+    request.open('GET', url, true);
+
+    request.onload = () => {
+      if (request.status >= 200 && request.status < 400) {
+        // Success!
+        const data = JSON.parse(request.responseText);
+        callback(data);
+      } else {
+        // We reached our target server, but it returned an error
+      }
+    };
+    request.onerror = (err) => {
+      console.err(err);
+    };
+    request.send();
+  };
+
 })(window);

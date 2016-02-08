@@ -1,23 +1,20 @@
 body {
   background: #fafafa;
-  font-family: 'Open Sans', Helvetica, Arial, sans-serif;
+  font-family: 'Arvo', Helvetica, Arial, sans-serif;
   color: #333;
   width: 100%;
   display: flex;
   align-items: center;
-  justify-content: center;
 }
 
 .container {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
 
   .grid-image-container {
-    margin: 5px;
+    margin: 10px;
     border: 1px solid $light-grey;
-    flex-basis: 3;
-    width: 300px;
-    height: 300px;
     transition: all 100ms ease-in;
 
     &:hover {
@@ -30,6 +27,20 @@ body {
   .grid-image {
     width: 300px;
     height: 300px;
+    background-size: cover;
+  }
+
+  .grid-film-description {
+    margin: 5px;
+    background-color: $light-grey;
+    color: $mid-grey;
+    padding: 2em;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Martel';
+    font-weight: 200;
+    font-size: 0.75em;
+    letter-spacing: 1px;
   }
 }
 
@@ -42,12 +53,9 @@ body {
   .film-selector {
     width: $select-width;
     height: $select-height;
-    margin-top: 1em;
-    margin-bottom: 1em;
     cursor: pointer;
     display: block;
-    border-color: transparent;
-    background-color: #ccc;
+    background-color: black;
     font-size: 1rem;
   }
 }

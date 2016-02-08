@@ -16,18 +16,21 @@ const init = (() => {
 
   const closeBtn = window.qs('.modal-close-btn');
   window.$on(closeBtn, 'click', (e) => {
-    e.srcElement.dispatchEvent(window.$stateEvent('closeModal'));
+    const targ = e.target ? e.target : e.srcElement;
+    targ.dispatchEvent(window.$stateEvent('closeModal'));
     window.$removeClass(overlay, 'is-open');
   });
 
   const nextBtn = window.qs('.overlay-right');
   window.$on(nextBtn, 'click', (e) => {
-    e.srcElement.dispatchEvent(window.$stateEvent('nextImage'));
+    const targ = e.target ? e.target : e.srcElement;
+    targ.dispatchEvent(window.$stateEvent('nextImage'));
   });
 
   const prevBtn = window.qs('.overlay-left');
   window.$on(prevBtn, 'click', (e) => {
-    e.srcElement.dispatchEvent(window.$stateEvent('prevImage'));
+    const targ = e.target ? e.target : e.srcElement;
+    targ.dispatchEvent(window.$stateEvent('prevImage'));
   });
 
   window.$stateEvent = (action, callback) => {

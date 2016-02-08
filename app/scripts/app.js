@@ -142,7 +142,8 @@ const Emulsion = (() => {
         setState('lightbox', null);
         break;
       case 'openModal':
-        const imageId = (e.srcElement.parentElement.attributes['data-image-id'].value);
+        const targ = e.target ? e.target : e.srcElement;
+        const imageId = (targ.parentElement.attributes['data-image-id'].value);
         setState('modalOpen', true);
         setLightbox(imageId, 'openModal');
         window.$renderOverlay(getState('images').find((el) => {

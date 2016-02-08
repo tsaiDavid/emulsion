@@ -8,12 +8,7 @@ const Grid = () => {
    * @param  {Function} callback [pass a callback to be executed on response]
    */
   const fetchImages = (filmType, callback) => {
-    fetch(`https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=851eba61830c7c59ab64308b75eec2f7&tags=${filmType}%2C+film&sort=relevance&per_page=10&page=1&format=json&nojsoncallback=1`)
-    .then((response) => {
-      return response.json();
-    }).then((data) => {
-      callback(data);
-    });
+    const data = window.$GET(`https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=851eba61830c7c59ab64308b75eec2f7&tags=${filmType}%2C+film&sort=relevance&per_page=9&page=1&format=json&nojsoncallback=1`, callback);
   };
 
   /**
@@ -61,13 +56,27 @@ const Grid = () => {
 
       /** event listener is added for each newly rendered image - triggers modal open **/
       window.$on(container, 'click', (e) => {
-        e.srcElement.dispatchEvent(window.$stateEvent('openModal'));
+        /** To deal with browser quirks, IE/FF need target others use srcElement **/
+        const targ = e.target ? e.target : e.srcElement;
+        targ.dispatchEvent(window.$stateEvent('openModal'));
         window.$addClass(window.qs('.overlay'), 'is-open');
       });
 
       /** append our newly built container, with image, to the main app element **/
       window.qs('main').appendChild(container);
     });
+    const textContainer = document.createElement('div');
+    textContainer.className = 'grid-film-description';
+
+    const ektar = `Kodak Ektar is often considered one of the world's finest grain
+    color negative film. Photographs shot with Ektar often have little noise due
+    to its low ISO speed (100). The colors are ultra-vivid, shots are exceptionally
+    sharp, and the film is ideal for modern-day scanning. It's use cases are
+    typically with nature and travel photography.`;
+
+    textContainer.innerHTML = ektar;
+
+    (window.qs('main').appendChild(textContainer));
   };
 
   /** expose methods - revealing module pattern **/
