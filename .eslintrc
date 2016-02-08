@@ -12,7 +12,8 @@
     "new-cap": 0,
     "consistent-return": 0,
     "padded-blocks": 1,
-    "no-case-declarations": 0
+    "no-case-declarations": 0,
+    "prefer-template": 0
   },
   "env": {
       "browser": true,

@@ -48,4 +48,17 @@
     const img = window.qs('.lightbox-image');
     img.setAttribute('src', imageSource);
   };
+
+  window.$debounce = (fn, timeout) => {
+    let timer = null;
+    return function debounced() {
+      const context = this;
+      const args = arguments;
+
+      clearTimeout(timer);
+      timer = setTimeout(() => {
+        fn.apply(context, args);
+      }, timeout);
+    };
+  };
 })(window);

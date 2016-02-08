@@ -50,7 +50,6 @@ const Emulsion = (() => {
 
   /**
    * Render function can only be triggered by application.
-   * @return {[type]} [description]
    */
   const render = () => {
     window.qs('#current-film').innerHTML = state.currFilmType;
