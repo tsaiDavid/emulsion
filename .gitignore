@@ -4,4 +4,3 @@ node_modules
 bower_components
 test/bower_components
 config.env
-dist

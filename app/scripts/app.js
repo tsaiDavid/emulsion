@@ -11,7 +11,7 @@ const Emulsion = (() => {
    * as simply as adding to the availFilmTypes array!
    */
   const state = {
-    modalOpen: false,       // Boolean representing whether or not our overlay is open     
+    modalOpen: false,       // Boolean representing whether or not our overlay is open
     images: null,           // Array containing image objects with their title, url, etc
     lightbox: null,         // Integer representing current index value of loaded image
     currFilmType: 'ektar',  // String value of selected global "film type"
@@ -90,7 +90,7 @@ const Emulsion = (() => {
    * Carries out state changes on the 'lightbox' property in our app state.
    * This dictates which image is loaded up in our overlay/lightbox - evaluated
    * by action types. This method is called by our app's custom event listener.
-   * 
+   *
    * @param  {String} imageId   - string representing image's id
    * @param  {String} action    - string representing action type
    */
@@ -120,16 +120,15 @@ const Emulsion = (() => {
     /** We use our helper functions to toggle the classes on overlay controls */
     if (getState('lightbox') + 1 === getState('images').length) {
       $EH.disableRight();
-      $EH.enableLeft();      
+      $EH.enableLeft();
     } else if (getState('lightbox') === 0) {
       $EH.disableLeft();
       $EH.enableRight();
     } else {
       $EH.enableRight();
-      $EH.enableLeft();      
+      $EH.enableLeft();
     }
   };
-
 
   /**
    * Initialization block
@@ -162,10 +161,12 @@ const Emulsion = (() => {
         setState('lightbox', null);
         break;
       case 'openModal':
+        /** Compat. across browsers, IE & FF use e.target */
         const targ = e.target ? e.target : e.srcElement;
         const imageId = (targ.parentElement.attributes['data-image-id'].value);
         setState('modalOpen', true);
         setLightbox(imageId, 'openModal');
+
         /** This simply renders the overlay initially and sets the correct title */
         $EH.renderOverlay(getState('images').find((el) => {
           return (el.id === imageId);
