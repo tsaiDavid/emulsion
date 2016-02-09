@@ -8,7 +8,7 @@ const filmText = () => {
   const ektar = `Kodak Ektar is often considered one of the world's finest grain
   color negative films. Photographs shot with Ektar often have little noise due
   to its low ISO speed (100). The colors are ultra-vivid, shots are exceptionally
-  sharp, and the film is ideal for modern-day scanning. It's use cases are
+  sharp, and the film is ideal for modern-day scanning. Its use-cases are
   typically with nature and travel photography.`;
 
   const portra = `Kodak's Portra series is a daylight-balanced professional color

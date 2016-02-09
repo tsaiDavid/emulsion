@@ -1,5 +1,6 @@
 'use strict';
 
+/** This is our main module, our Application! */
 const Emulsion = (() => {
   /** Exposing Grid module and $EH (helper functions) **/
   const grid = Grid();

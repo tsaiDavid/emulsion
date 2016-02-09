@@ -1,10 +1,9 @@
 .overlay {
-  position: absolute;
+  position: fixed;
   background: fade-out($near-black, 0.05);
+  height: 100vh;
+  width: 100vw;
   top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -12,6 +11,7 @@
   opacity: 0;
   pointer-events: none;
   transition: all 300ms ease-in-out;
+  z-index: 2000;
 
   &.is-open {
     opacity: 1;
@@ -24,10 +24,11 @@
 
 .overlay-left, .overlay-right {
   color: $light-grey;
-  padding: 5%;
+  padding: 40px;
   font-size: 30px;
   cursor: pointer;
   transition: all 100ms ease-in-out;
+
   &:hover {
     transform: scale(1.2);
   }
@@ -37,6 +38,19 @@
     transition: none;
     pointer-events: none;
   }
+}
+
+.overlay-left {
+  position: fixed;
+  align-items: center;
+  left: 0;
+  bottom: 50%;
+}
+
+.overlay-right {
+  position: fixed;
+  right: 0;
+  bottom: 50%;
 }
 
 .modal {

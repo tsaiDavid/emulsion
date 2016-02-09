@@ -1,5 +1,6 @@
 'use strict';
 
+/** This Grid module serves to handle the tasks involving the image grid */
 const Grid = () => {
   const $EH = window.$EmulsionHelpers();
 

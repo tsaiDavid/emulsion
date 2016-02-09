@@ -75,6 +75,36 @@ Another intent behind this project's methodology, was to demonstrate that "simpl
 
 The application's file structure is described below:
 
+```
+emulsion
+│   README.md             (you're reading this now!)
+│   package.json          (make sure to run npm install)
+│   .eslintrc             (I hope you're a stickler for clean code!)
+│   .gulpfile.babel.js    (Gulp's tasks configured here)
+│
+└───app
+    │   index.html
+    │
+    ├───scripts
+    │   │   app.js        (the main app)
+    │   │   grid.js       (the grid module, responsible for the image grid)
+    │   │   helpers.js    (all our $EH helper functions go here)
+    │   │   init.js       (this script helps attach some event listeners!)
+    │   │   filmText.js   (contains all our film descriptions)
+    │
+    └───styles
+    │   main.scss         (our main style sheet, requiring all others via imports)
+    │   base              (the app's base styles go here)
+    │   components        (component styles like the overlay, button, etc)
+    │   layout            (styles involving general page layout)
+    │   utils             (reusable variables, functions, etc)
+    │   vendor            (vendor files like Normalize can go here)
+
+```
+*Please note that I've followed the suggested pattern for directory structure
+for SASS, albeit slightly condensed for this smaller app*
+
+
 ## [](#get-started)Get Started
 
 Before you start, you'll want to install the necessary npm packages.

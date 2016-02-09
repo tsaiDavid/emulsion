@@ -53,7 +53,7 @@ const $EmulsionHelpers = () => {
    * we need to leverage callbacks. Another option would be to use Promises,
    * but this is a classic technique. Browsers like Chrome allow us to use
    * the new, sexy Fetch API... I'll keep dreaming for a brighter day!
-   * 
+   *
    * @param  {String}   url       - Location where we will make our request - Flickr's API
    * @param  {Function} callback  - Callback to be used once data has been received
    */
@@ -66,7 +66,7 @@ const $EmulsionHelpers = () => {
         const data = JSON.parse(request.responseText);
         callback(data);
       } else {
-        console.err("Error: Reached target server, but returned error.")
+        console.err("Error: Reached target server, but returned error.");
       }
     };
     request.onerror = (err) => {
@@ -78,7 +78,7 @@ const $EmulsionHelpers = () => {
   /**
    * Creates a source from an image object (that we get from state, request, etc).
    * Leverages ES6's magical string interpolation for greater readability!
-   * 
+   *
    * @param  {Object} image  - Image object with properties needed to meet Flickr's source
    * @return {String}        - Source URL string
    */
@@ -102,7 +102,7 @@ const $EmulsionHelpers = () => {
   /**
    * Debounce a given function - written in advance for usage with
    * user clicking too many times. It's an alternative, or type of 'throttle'.
-   * 
+   *
    * @param  {Function} fn       - Function to be debounced
    * @param  {Integer}  timeout  - Time in ms for the function to be debounced
    * @return {Function}          - Returns a debounced function thanks to JS closure
@@ -123,7 +123,7 @@ const $EmulsionHelpers = () => {
   /**
    * Creates a new custom event 'stateChange' - used by Emulsion App
    * to handle top-level state management and UI updates.
-   * 
+   *
    * @param  {String}   action   - Action type described here, used in switch statement
    * @param  {Function} callback - Optional callback that can be utilized at the top level
    * @return {CustomEvent}       - CustomEvent that can be 'heard' by our App
@@ -163,7 +163,7 @@ const $EmulsionHelpers = () => {
     addClass(qs('.overlay-right'), 'is-disabled');
   };
 
-  /** 
+  /**
    * Methods to be exposed when the helpers function is invoked.
    */
   return {
@@ -181,5 +181,5 @@ const $EmulsionHelpers = () => {
     disableLeft,
     enableRight,
     disableRight
-  }
+  };
 };

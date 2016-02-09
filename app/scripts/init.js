@@ -1,4 +1,5 @@
 'use strict';
+
 /**
  * Initialization - attach event listeners, etc here.
  * Unlike the initialization section in our 'app.js', these are not directly
