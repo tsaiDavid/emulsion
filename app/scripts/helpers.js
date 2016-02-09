@@ -89,13 +89,14 @@ const $EmulsionHelpers = () => {
   };
 
   /**
-   * Renders an image within the overlay/lightbox.
-   * 
-   * @param  {String} imageSource - String is the image source (URL)
+   * Renders an image and its title within the overlay/lightbox.
    */
-  const renderOverlay = (imageSource) => {
+  const renderOverlay = (imageSource, title) => {
     const img = qs('.lightbox-image');
     img.setAttribute('src', imageSource);
+
+    const imgTitle = qs('.lightbox-image-title');
+    imgTitle.innerHTML = title;
   };
 
   /**

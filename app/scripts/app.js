@@ -143,16 +143,19 @@ const Emulsion = (() => {
    * This block is important! We initialize our app to have a global event
    * system - driven by 'stateChange'. Based on an action type / keyword,
    * we'll perform some sort of UI update here, and update state as needed.
+   * Mainly, we're reusing functions to select our title and source from state!
    */
   $EH.on(app, 'stateChange', (e) => {
     switch (e.detail.action) {
       case 'nextImage':
         setLightbox(null, 'nextImage');
-        $EH.renderOverlay(getState('images')[getState('lightbox')].src);
+        $EH.renderOverlay(getState('images')[getState('lightbox')].src,
+          getState('images')[getState('lightbox')].title);
         break;
       case 'prevImage':
         setLightbox(null, 'prevImage');
-        $EH.renderOverlay(getState('images')[getState('lightbox')].src);
+        $EH.renderOverlay(getState('images')[getState('lightbox')].src,
+          getState('images')[getState('lightbox')].title);
         break;
       case 'closeModal':
         setState('modalOpen', false);
@@ -163,9 +166,12 @@ const Emulsion = (() => {
         const imageId = (targ.parentElement.attributes['data-image-id'].value);
         setState('modalOpen', true);
         setLightbox(imageId, 'openModal');
+        /** This simply renders the overlay initially and sets the correct title */
         $EH.renderOverlay(getState('images').find((el) => {
           return (el.id === imageId);
-        }).src);
+        }).src, getState('images').find((el) => {
+          return (el.id === imageId);
+        }).title);
         break;
       default:
         break;
