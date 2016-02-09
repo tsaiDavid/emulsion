@@ -1,3 +1,30 @@
-<!doctype html><html lang=""><head><meta charset="utf-8"><meta name="description" content=""><meta name="viewport" content="width=device-width,initial-scale=1"><title>Emulsion</title><!-- Place favicon.ico in the root directory --><link href="https://fonts.googleapis.com/css?family=Arvo|Martel:400,300,200" rel="stylesheet" type="text/css"><link href="http://db.onlinewebfonts.com/c/2da53e7106d78ce56a7fa4b29ccaeee6?family=ActaDisplayW01-Book" rel="stylesheet" type="text/css"><link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css"><link rel="stylesheet" href="styles/main.css"></head><body><div class="app-container wrapper"><!--[if lt IE 10]>
-        <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-      <![endif]--><header class="nav"><div id="nav-title">Emulsion</div><div class="nav-film-select"><span id="current-film-intro">viewing the emulsion of</span> <span id="current-film"></span></div><div id="next-film-arrow">film advance <i class="fa fa-angle-double-right"></i></div></header><main class="grid-container"><!-- Grid images appended here. --></main><!-- Overlay is a modal which also contains a lightbox component --><div class="overlay"><div class="overlay-left"><i class="fa fa-chevron-left"></i></div><div class="modal"><div class="modal-close-btn"><i class="fa fa-times"></i></div><div class="lightbox"><div class="lightbox-image-title"></div><img class="lightbox-image" src="" alt=""></div></div><div class="overlay-right"><i class="fa fa-chevron-right"></i></div></div><div class="push"></div></div><footer class="footer-container"><div class="footer-text">Developed with <i class="fa fa-camera"></i> in San Francisco</div></footer><script src="scripts/main.js"></script></body></html>
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Mocha Spec Runner</title>
+  <link rel="stylesheet" href="../bower_components/mocha/mocha.css">
+</head>
+<body>
+  <div id="mocha"></div>
+  <script src="../bower_components/mocha/mocha.js"></script>
+  <script>mocha.setup('bdd');</script>
+  <script src="../bower_components/chai/chai.js"></script>
+  <script>
+    var assert = chai.assert;
+    var expect = chai.expect;
+    var should = chai.should();
+  </script>
+  <!-- bower:js -->
+  <!-- endbower -->
+  <!-- include source files here... -->
+  <!-- include spec files here... -->
+  <script src="src/helpers.js"></script>
+  <script src="spec/test.js"></script>
+  <script>
+    if (navigator.userAgent.indexOf('PhantomJS') === -1) {
+      mocha.run();
+    }
+  </script>
+</body>
+</html>
