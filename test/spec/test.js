@@ -1,28 +1,30 @@
 (function () {
   'use strict';
+  const $EH = $EmulsionHelpers();
 
-  describe('Give it some context', function () {
-    describe('maybe a bit more context here', function () {
-      it('should run here few assertions', function () {
+  const image = { "id": '24182835613', 'owner': "47559933@N04", 'secret': "4a120de7eb", 'server': "1517", 'farm': 2, 'title': "", 'ispublic': 1, 'isfriend': 0, 'isfamily': 0 };
 
+  const image2 = { "id": '24686255032', 'owner': "47908475@N02", 'secret': "3067db5e5e", 'server': "1464", 'farm': 2, 'title': "", 'ispublic': 1, 'isfriend': 0, 'isfamily': 0 };
+
+
+  describe('Emulsion App - Helper Functions', function () {
+    describe('createImgSource should generate correct url', function () {
+      
+      it('should generate correct URL given sample 1', function () {
+        expect($EH.createImgSource(image)).to.equal("https://farm2.staticflickr.com/1517/24182835613_4a120de7eb.jpg")
+      });
+
+      it('should generate correct URL given sample 2', () => {
+        expect($EH.createImgSource(image2)).to.equal("https://farm2.staticflickr.com/1464/24686255032_3067db5e5e.jpg")
       });
     });
   });
 
-  // $on(window, 'load', stubbedLoadImage(testData.photos.photo));
-  // //
-  // if (window.data) {
-  //   $on(window, 'load', renderImages());
-  // }
-  //
-  // const testData = window.testData;
+  /**
+   * Below is stubbed data that can be used - it's an actual JSON response from Flickr for
+   * the 'ektar film' tags.
+   */
 
-  // TODO: Remove once done testing static set;
-  // function stubbedLoadImage(data) {
-  //   window.data = $reduceImgResponse(data);
-  //   console.log(window.data);
-  // }
-  //
   //   window.testData = { 'photos': { 'page': 1, 'pages': '441966', 'perpage': 20, 'total': '8839319',
       // 'photo': [
       //   { "id": '24182835613', 'owner': "47559933@N04", 'secret': "4a120de7eb", 'server': "1517", 'farm': 2, 'title': "", 'ispublic': 1, 'isfriend': 0, 'isfamily': 0 },
