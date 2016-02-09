@@ -5,47 +5,33 @@
  * tied to application state and are placed here for better separation of concerns.
  */
 const init = (() => {
-  const app = window.Emulsion;
+  /** Making the app and helper functions available within our initialization */
+  const app = Emulsion;
+  const $EH = $EmulsionHelpers();
 
-  window.$on(window.qs('#next-film-arrow'), 'click', app.nextFilmType);
+  $EH.on($EH.qs('#next-film-arrow'), 'click', app.nextFilmType);
 
   /**
    * Below, we attach event listeners that will emit custom 'stateEvents'
    */
-  const overlay = window.qs('.overlay');
+  const overlay = $EH.qs('.overlay');
 
-  const closeBtn = window.qs('.modal-close-btn');
-  window.$on(closeBtn, 'click', (e) => {
+  const closeBtn = $EH.qs('.modal-close-btn');
+  $EH.on(closeBtn, 'click', (e) => {
     const targ = e.target ? e.target : e.srcElement;
-    targ.dispatchEvent(window.$stateEvent('closeModal'));
-    window.$removeClass(overlay, 'is-open');
+    targ.dispatchEvent($EH.stateEvent('closeModal'));
+    $EH.removeClass(overlay, 'is-open');
   });
 
-  const nextBtn = window.qs('.overlay-right');
-  window.$on(nextBtn, 'click', (e) => {
+  const nextBtn = $EH.qs('.overlay-right');
+  $EH.on(nextBtn, 'click', (e) => {
     const targ = e.target ? e.target : e.srcElement;
-    targ.dispatchEvent(window.$stateEvent('nextImage'));
+    targ.dispatchEvent($EH.stateEvent('nextImage'));
   });
 
-  const prevBtn = window.qs('.overlay-left');
-  window.$on(prevBtn, 'click', (e) => {
+  const prevBtn = $EH.qs('.overlay-left');
+  $EH.on(prevBtn, 'click', (e) => {
     const targ = e.target ? e.target : e.srcElement;
-    targ.dispatchEvent(window.$stateEvent('prevImage'));
+    targ.dispatchEvent($EH.stateEvent('prevImage'));
   });
-
-  window.$stateEvent = (action, callback) => {
-    return new CustomEvent(
-      'stateChange',
-      {
-        detail: {
-          action,
-          callback,
-          state: app.getState(),
-          time: new Date()
-        },
-        bubbles: true,
-        cancelable: true
-      }
-    );
-  };
 })();

@@ -1,17 +1,23 @@
 'use strict';
 
 const Emulsion = (() => {
+  /** Exposing Grid module and $EH (helper functions) **/
+  const grid = Grid();
+  const $EH = $EmulsionHelpers();
+
+  /**
+   * This is our initial state object - our one source of truth! It's great
+   * because if we wanted to add more film types, we can make those changes here...
+   * as simply as adding to the availFilmTypes array!
+   */
   const state = {
-    modalOpen: false,
-    images: null,
-    lightbox: null,
-    currFilmType: 'ektar',
-    currFilmIndex: '0',
+    modalOpen: false,       // Boolean representing whether or not our overlay is open     
+    images: null,           // Array containing image objects with their title, url, etc
+    lightbox: null,         // Integer representing current index value of loaded image
+    currFilmType: 'ektar',  // String value of selected global "film type"
+    currFilmIndex: '0',     // Integer, index value of current "film type"
     availFilmTypes: ['ektar', 'portra', 'tri-x', 'superia', 'velvia', 'pro 400h']
   };
-
-  /** Exposing 'Grid' in our application **/
-  const grid = window.Grid();
 
   /**
    * Given a key and a new value, update the app state and invoke a callback -
@@ -22,7 +28,7 @@ const Emulsion = (() => {
    */
   const setState = (key, value, callback) => {
     state[key] = value;
-    if (callback !== undefined) {
+    if (callback) {
       callback(value);
     }
   };
@@ -51,10 +57,10 @@ const Emulsion = (() => {
   };
 
   /**
-   * Render function can only be triggered by application.
+   * Render function can only be triggered by this app
    */
   const render = () => {
-    window.qs('#current-film').innerHTML = state.currFilmType;
+    $EH.qs('#current-film').innerHTML = state.currFilmType;
   };
 
   /**
@@ -84,6 +90,7 @@ const Emulsion = (() => {
    * Carries out state changes on the 'lightbox' property in our app state.
    * This dictates which image is loaded up in our overlay/lightbox - evaluated
    * by action types. This method is called by our app's custom event listener.
+   * 
    * @param  {String} imageId   - string representing image's id
    * @param  {String} action    - string representing action type
    */
@@ -110,35 +117,42 @@ const Emulsion = (() => {
         break;
     }
 
+    /** We use our helper functions to toggle the classes on overlay controls */
     if (getState('lightbox') + 1 === getState('images').length) {
-      window.$addClass(window.qs('.overlay-right'), 'is-disabled');
-      window.$removeClass(window.qs('.overlay-left'), 'is-disabled');
+      $EH.disableRight();
+      $EH.enableLeft();      
     } else if (getState('lightbox') === 0) {
-      window.$addClass(window.qs('.overlay-left'), 'is-disabled');
-      window.$removeClass(window.qs('.overlay-right'), 'is-disabled');
+      $EH.disableLeft();
+      $EH.enableRight();
     } else {
-      window.$removeClass(window.qs('.overlay-right'), 'is-disabled');
-      window.$removeClass(window.qs('.overlay-left'), 'is-disabled');
+      $EH.enableRight();
+      $EH.enableLeft();      
     }
   };
 
 
   /**
-   * Initialization block.
+   * Initialization block
    */
   render();
   loadImages();
 
-  const app = window.qs('.app-container');
-  window.$on(app, 'stateChange', (e) => {
+  const app = $EH.qs('.app-container');
+
+  /**
+   * This block is important! We initialize our app to have a global event
+   * system - driven by 'stateChange'. Based on an action type / keyword,
+   * we'll perform some sort of UI update here, and update state as needed.
+   */
+  $EH.on(app, 'stateChange', (e) => {
     switch (e.detail.action) {
       case 'nextImage':
         setLightbox(null, 'nextImage');
-        window.$renderOverlay(getState('images')[getState('lightbox')].src);
+        $EH.renderOverlay(getState('images')[getState('lightbox')].src);
         break;
       case 'prevImage':
         setLightbox(null, 'prevImage');
-        window.$renderOverlay(getState('images')[getState('lightbox')].src);
+        $EH.renderOverlay(getState('images')[getState('lightbox')].src);
         break;
       case 'closeModal':
         setState('modalOpen', false);
@@ -149,7 +163,7 @@ const Emulsion = (() => {
         const imageId = (targ.parentElement.attributes['data-image-id'].value);
         setState('modalOpen', true);
         setLightbox(imageId, 'openModal');
-        window.$renderOverlay(getState('images').find((el) => {
+        $EH.renderOverlay(getState('images').find((el) => {
           return (el.id === imageId);
         }).src);
         break;
@@ -158,10 +172,10 @@ const Emulsion = (() => {
     }
     /**
      * During development, uncomment the two lines below to see your app state change,
-     * based on the actions that are occuring.
+     * based on the actions that are occuring. Pop open the console and check it out!
      */
-    console.log(`Action Type: ${e.detail.action}`);
-    console.log(getState());
+    // console.log(`Action Type: ${e.detail.action}`);
+    // console.log(getState());
   });
 
   /** expose methods - revealing module pattern **/

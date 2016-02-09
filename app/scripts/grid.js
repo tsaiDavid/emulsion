@@ -1,6 +1,8 @@
 'use strict';
 
 const Grid = () => {
+  const $EH = window.$EmulsionHelpers();
+
   /**
    * Used to fetch images from the Flickr endpoint - leverages ES6's ability to
    * work with the 'fetch API' - and handle async with promises.
@@ -8,7 +10,7 @@ const Grid = () => {
    * @param  {Function} callback [pass a callback to be executed on response]
    */
   const fetchImages = (filmType, callback) => {
-    const data = window.$GET(`https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=851eba61830c7c59ab64308b75eec2f7&tags=${filmType}%2C+film&sort=relevance&per_page=9&page=1&format=json&nojsoncallback=1`, callback);
+    const data = $EH.GET(`https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=851eba61830c7c59ab64308b75eec2f7&tags=${filmType}%2C+film&sort=relevance&per_page=9&page=1&format=json&nojsoncallback=1`, callback);
   };
 
   /**
@@ -18,7 +20,7 @@ const Grid = () => {
    */
   const mapImages = (data) => {
     return data.map((image) => {
-      image.src = window.$createImgSource(image);
+      image.src = $EH.createImgSource(image);
       return image;
     });
   };
@@ -41,7 +43,7 @@ const Grid = () => {
   const renderImages = (imagesArray, filmType) => {
     const filmText = window.filmText();
 
-    removeImages(window.qs('main'));
+    removeImages($EH.qs('main'));
 
     imagesArray.forEach((image) => {
       /** create a div, 'grid-image-container' **/
@@ -57,15 +59,15 @@ const Grid = () => {
       container.setAttribute('data-image-id', image.id);
 
       /** event listener is added for each newly rendered image - triggers modal open **/
-      window.$on(container, 'click', (e) => {
+      $EH.on(container, 'click', (e) => {
         /** To deal with browser quirks, IE/FF need target others use srcElement **/
         const targ = e.target ? e.target : e.srcElement;
-        targ.dispatchEvent(window.$stateEvent('openModal'));
-        window.$addClass(window.qs('.overlay'), 'is-open');
+        targ.dispatchEvent($EH.stateEvent('openModal'));
+        $EH.addClass($EH.qs('.overlay'), 'is-open');
       });
 
       /** append our newly built container, with image, to the main app element **/
-      window.qs('main').appendChild(container);
+      $EH.qs('main').appendChild(container);
     });
 
     /** for each newly rendered grid, we will pull the appropriate text **/
@@ -73,7 +75,7 @@ const Grid = () => {
     textContainer.className = 'grid-film-description';
     textContainer.innerHTML = `<p id="grid-film-description-inner">${filmText[filmType]}</p>`;
 
-    (window.qs('main').appendChild(textContainer));
+    ($EH.qs('main').appendChild(textContainer));
   };
 
   /** expose methods - revealing module pattern **/
