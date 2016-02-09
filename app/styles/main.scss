@@ -2,7 +2,7 @@
 
 // 1. Configuration and helpers
 @import
-  'utils/variables'
+  'utils/variables';
 
 // 2. Vendors
 @import
@@ -12,8 +12,7 @@
 @import
   'base/base',
   'base/fonts',
-  'base/typography',
-  'base/helpers';
+  'base/typography';
 
 // 4. Layout-related sections
 @import
@@ -24,7 +23,3 @@
 @import
   'components/buttons',
   'components/overlay';
-
-// 6. Page-specific styles
-@import
-  'pages/home';
