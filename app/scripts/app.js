@@ -122,12 +122,13 @@ const Emulsion = (() => {
     }
   };
 
-  render();
-  loadImages();
 
   /**
    * Initialization block.
    */
+  render();
+  loadImages();
+
   const app = window.qs('.app-container');
   window.$on(app, 'stateChange', (e) => {
     switch (e.detail.action) {

@@ -12,6 +12,7 @@
   cursor: pointer;
   color: $current-film-text;
   border-radius: 5px;
+  transition: all 100ms ease-in-out;
 
   &:hover {
     background-color: $current-film-hover

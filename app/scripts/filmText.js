@@ -1,5 +1,9 @@
 'use strict';
 
+/**
+ * This module is only exposed to have this static text returned for use in the grid app,
+ * or anywhere else that might be necessary.
+ */
 const filmText = () => {
   const ektar = `Kodak Ektar is often considered one of the world's finest grain
   color negative films. Photographs shot with Ektar often have little noise due

@@ -67,10 +67,11 @@ const Grid = () => {
       /** append our newly built container, with image, to the main app element **/
       window.qs('main').appendChild(container);
     });
+
+    /** for each newly rendered grid, we will pull the appropriate text **/
     const textContainer = document.createElement('div');
     textContainer.className = 'grid-film-description';
-    debugger;
-    textContainer.innerHTML = `${filmText[filmType]}`;
+    textContainer.innerHTML = `<p id="grid-film-description-inner">${filmText[filmType]}</p>`;
 
     (window.qs('main').appendChild(textContainer));
   };
