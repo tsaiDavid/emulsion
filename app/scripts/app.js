@@ -7,7 +7,7 @@ const Emulsion = (() => {
     lightbox: null,
     currFilmType: 'ektar',
     currFilmIndex: '0',
-    availFilmTypes: ['ektar', 'portra', 'tri-x', 'superia', 'velvia']
+    availFilmTypes: ['ektar', 'portra', 'tri-x', 'superia', 'velvia', 'pro 400h']
   };
 
   /** Exposing 'Grid' in our application **/
@@ -45,7 +45,7 @@ const Emulsion = (() => {
   const loadImages = () => {
     grid.fetchImages(state.currFilmType, (data) => {
       setState('images', grid.mapImages(data.photos.photo), () => {
-        grid.renderImages(state.images);
+        grid.renderImages(state.images, getState('currFilmType'));
       });
     });
   };
@@ -75,7 +75,7 @@ const Emulsion = (() => {
     setState('currFilmType', nextVal);
     setState('currFilmIndex', nextIndex, () => {
       loadImages();
-      grid.renderImages(state.images);
+      grid.renderImages(state.images, getState('currFilmType'));
       render();
     });
   };

@@ -38,7 +38,9 @@ const Grid = () => {
    * Renders all images on the grid - removes old images before adding new ones!
    * @param  {Array} imagesArray - Array of images that exist in the app state.
    */
-  const renderImages = (imagesArray) => {
+  const renderImages = (imagesArray, filmType) => {
+    const filmText = window.filmText();
+
     removeImages(window.qs('main'));
 
     imagesArray.forEach((image) => {
@@ -67,14 +69,8 @@ const Grid = () => {
     });
     const textContainer = document.createElement('div');
     textContainer.className = 'grid-film-description';
-
-    const ektar = `Kodak Ektar is often considered one of the world's finest grain
-    color negative film. Photographs shot with Ektar often have little noise due
-    to its low ISO speed (100). The colors are ultra-vivid, shots are exceptionally
-    sharp, and the film is ideal for modern-day scanning. It's use cases are
-    typically with nature and travel photography.`;
-
-    textContainer.innerHTML = ektar;
+    debugger;
+    textContainer.innerHTML = `${filmText[filmType]}`;
 
     (window.qs('main').appendChild(textContainer));
   };

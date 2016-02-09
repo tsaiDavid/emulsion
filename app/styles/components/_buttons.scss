@@ -3,8 +3,17 @@
 // -----------------------------------------------------------------------------
 
 #next-film-arrow {
-  font-size: 1.5em;
-  padding-left: 10px;
-  padding-right: 10px;
+  background-color: $next-film-bg;
+  font-size: 0.75rem;
+  padding: 1em;
+  margin-top: 1em;
+  text-transform: uppercase;
+  font-family: 'Arvo';
   cursor: pointer;
+  color: $current-film-text;
+  border-radius: 5px;
+
+  &:hover {
+    background-color: $current-film-hover
+  }
 }
